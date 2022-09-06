@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
     end
 
     def index
-        @articles = Article.where(state: 'submitted')
+        @articles = Article.is_submitted
     end
 
     def new
