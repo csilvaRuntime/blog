@@ -20,9 +20,11 @@
         <br/>
         <%= form.text_area :text %>
     </p>
-
+    
     <button type="submit" name="article[state]" value="submitted">Submit</button>
-    <button type="submit" name="article[state]" value="pending">Pending</button>
-    <button type="submit" name="article[state]" value="draft">Save as Draft</button>
 
+    <% if !@article.submitted? %>
+        <button type="submit" name="article[state]" value="pending">Pending</button>
+        <button type="submit" name="article[state]" value="draft">Save as Draft</button>
+    <% end %>
 <% end %>

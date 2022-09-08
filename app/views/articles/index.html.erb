@@ -4,16 +4,26 @@
     <tr>
         <th>Title</th>
         <th>Text</th>
+        <th>Author</th>
+        <th>Number Editions</th>
     </tr>
     <% @articles.each do |article| %>
     <tr>
         <td><%= article.title %></td>
-        <td><%= article.text %></td>
-        <td><%= link_to 'View', article_path(article.id) %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td id ="article_text"><%= article.text %></td>
+        <td><%= article.user.username %></td>
+        <td align="center"><%= article.edit_count %></td>
+        <td><%= button_to 'View', article_path(article.id), method: :get%></td>
+        <% if article.user_id == @current_user.id %>
+            <td><%= button_to 'Edit', edit_article_path(article.id), method: :get %></td>
+        <% end %>
+        <% if @current_user.admin? %>
         <td><%= button_to 'Delete', article_path(article.id), method: :delete %></td>
+        <% end %>
     </tr>
     <% end %>
 </table>
 
 <%= link_to 'New Article', new_article_path %>
+<%= link_to 'My Pending Articles', pending_path %>
+<%= link_to 'My Drafts', drafts_path %>

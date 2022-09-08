@@ -1,0 +1,17 @@
+<header>
+    <div class='navbar'>
+        <nav>
+            <ul>
+            <% if @current_user %>
+                <li><%= link_to 'Artigos', articles_path %></li>
+                <% if @current_user.admin? %>
+                    <li><%= link_to 'Users', users_path %></li>
+                <% end %>
+                <li id="username_nav"><%= @current_user.username %> is logged in </li>
+                <li id="logout_button"><%= button_to 'Logout', sessions_path, method: :delete %></li>
+                <li id="edit_button"><%= button_to 'View Profile', user_path(@current_user.id), method: :get %></li>
+            <% else %>
+                <li><%= link_to 'Login', new_sessions_path %></li>
+            <% end %>
+            </ul>
+        </nav>

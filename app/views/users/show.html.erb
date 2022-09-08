@@ -1,0 +1,12 @@
+<h1> User details </h1>
+
+<p><strong>Name: </strong><%= @user.name %></p>
+<p><strong>Email: </strong><%= @user.email %></p>
+<p><strong>Role: </strong><%= @user.user_role %></p>
+<p><strong>State: </strong><%= @user.state %></p>
+
+<% if @current_user.id == @user.id %>
+    <%= button_to 'Edit Profile', edit_user_path(@user.id), method: :get%>
+<% else %>
+    <% link_to 'Users', users_path %>
+<% end %>
