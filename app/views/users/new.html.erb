@@ -1,3 +1,40 @@
 <h1>Create a new user</h1>
 
-<%= render 'form' %>
+<% if @user.errors.any? %>
+    <h2>The following errors prevented the article from being saved</h2>
+        <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+<% end %>
+
+<%= form_with(model: @user, local: true) do |form| %>
+
+    <p>
+        <%= form.label :name %>
+        <br/>
+        <%= form.text_field :name %>
+    </p>
+
+    <p>
+        <%= form.label :email %>
+        <br/>
+        <%= form.text_field :email %>
+    </p>
+
+    <p>
+        <%= form.label :username %>
+        <br/>
+        <%= form.text_field :username %>
+    </p>
+
+    <p>
+        <%= form.label :password %>
+    <br/>
+        <%= form.password_field :password %>
+    </p>
+
+    <%= form.submit %>
+
+<% end %>

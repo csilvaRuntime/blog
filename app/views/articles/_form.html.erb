@@ -20,11 +20,16 @@
         <br/>
         <%= form.text_area :text %>
     </p>
-    
+
+    <%= form.select("article_tags_attributes[][tag_id]", Tag.all.collect { |tag| [tag.name, tag.id] }, { prompt: "Please select"}) %>
+
+    <br/>
+
     <button type="submit" name="article[state]" value="submitted">Submit</button>
 
     <% if !@article.submitted? %>
         <button type="submit" name="article[state]" value="pending">Pending</button>
         <button type="submit" name="article[state]" value="draft">Save as Draft</button>
     <% end %>
+
 <% end %>

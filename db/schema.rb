@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_07_150021) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_09_141008) do
+  create_table "article_tags", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "text"
@@ -19,10 +26,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_150021) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "edit_count", default: 0
+    t.string "slug"
+    t.datetime "date_submitted"
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
   create_table "tables", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -36,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_150021) do
     t.integer "state", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "p_updated_at"
   end
 
   add_foreign_key "articles", "users"

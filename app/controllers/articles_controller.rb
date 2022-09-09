@@ -1,19 +1,20 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:show, :edit, :update, :destroy]
+    before_action :set_tags, only: [:index, :new, :edit]
 
     def show
     end
 
-    def drafts
-        @articles = Article.is_draft
-    end
-
-    def pending
-        @articles = Article.is_pending
+    def my_articles
+        @articles = Article.where(user_id: @current_user)
     end
 
     def index
-        @articles = Article.is_submitted
+        if params[:state]
+            @articles = Article.where(:state => params[:state])
+        else
+            @articles = Article.all
+        end
     end
 
     def new
@@ -28,6 +29,7 @@ class ArticlesController < ApplicationController
         @article = Article.new(article_params)
         if @article.save
             flash[:notice] = "Article created successfully"
+            MailJob.set(wait: 1.minutes).perform_later(@article.user_id)
             redirect_to @article
         else
             render 'new', status: :unprocessable_entity
@@ -56,8 +58,12 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:id])
     end
 
+    def set_tags
+        @tags = Tag.all
+    end
+
     def article_params
-        params.require(:article).permit(:title, :text, :state, :user_id)
+        params.require(:article).permit(:title, :text, :state, :user_id, article_tags_attributes: [:tag_id])
     end
 
 end

@@ -5,25 +5,30 @@
         <th>Title</th>
         <th>Text</th>
         <th>Author</th>
-        <th>Number Editions</th>
+        <th>Editions</th>
     </tr>
     <% @articles.each do |article| %>
     <tr>
-        <td><%= article.title %></td>
-        <td id ="article_text"><%= article.text %></td>
-        <td><%= article.user.username %></td>
-        <td align="center"><%= article.edit_count %></td>
-        <td><%= button_to 'View', article_path(article.id), method: :get%></td>
+            <td onclick="location.href='<%= article_path(article.id)%>';"> <%= article.title %></td>
+            <td id="article_text" onclick="location.href='<%= article_path(article.id)%>';"><%= article.text %></td>
+            <td><%= article.user.username %></td>
+            <td align="center"><%= article.edit_count %></td>
         <% if article.user_id == @current_user.id %>
             <td><%= button_to 'Edit', edit_article_path(article.id), method: :get %></td>
+            <td><%= button_to 'Delete', article_path(article.id), method: :delete %></td>
         <% end %>
-        <% if @current_user.admin? %>
-        <td><%= button_to 'Delete', article_path(article.id), method: :delete %></td>
+
+        <% if @current_user.admin? && article.user_id != @current_user.id %>
+            <td><%= button_to 'Delete', article_path(article.id), method: :delete %></td>
         <% end %>
     </tr>
     <% end %>
 </table>
 
-<%= link_to 'New Article', new_article_path %>
-<%= link_to 'My Pending Articles', pending_path %>
-<%= link_to 'My Drafts', drafts_path %>
+        <%= link_to 'New Article', new_article_path %>
+        <% if @current_user.admin? %>
+            <%= link_to 'New Tag', new_tag_path %>
+        <% end %>
+        <%= link_to 'My Articles', my_articles_path %>    
+        <%= link_to 'My Pending Articles', articles_path(state: "") %>
+        <%= link_to 'My Drafts', articles_path(state: "draft")%>

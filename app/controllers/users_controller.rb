@@ -16,7 +16,6 @@ class UsersController < ApplicationController
     def edit
     end
 
-    #if admin
     def create
         @user = User.new(user_params)
         if @user.save
@@ -44,6 +43,8 @@ class UsersController < ApplicationController
     end
 
     def destroy
+        article = Article.find_by(user_id: @user.id)
+        article.destroy
         @user.destroy
         redirect_to users_path
     end

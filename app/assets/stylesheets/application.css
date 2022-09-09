@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+ 
 
 nav ul {
     list-style: none;
@@ -43,4 +44,16 @@ li {
 
 #username_nav {
     float: right;
+}
+
+.tag_yellow {
+    color: #FFD433 ;
+}
+
+.tag_green{
+    color: #96FF33  ;
+}
+
+.tag_blue{
+    color: #33E6FF ;
 }

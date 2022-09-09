@@ -6,9 +6,15 @@ end
 
 def create
     user = User.find_by(email: params[:session][:email])
-    if user && user.authenticate(params[:session][:email], params[:session][:password])
+    if user && user.active? && user.authenticate(params[:session][:email], params[:session][:password])
         session[:user_id] = user.id
+        p user.needs_to_update_password?(user.id)
+        debugger
         redirect_to articles_path
+        if user.needs_to_update_password?(user.id)
+            user.update(state: "inactive")
+            flash[:alert] = "For security reasons you have to change your password every 30 seconds"
+        end
     else
         render 'new'
     end
