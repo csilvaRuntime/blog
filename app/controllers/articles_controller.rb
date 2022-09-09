@@ -5,15 +5,13 @@ class ArticlesController < ApplicationController
     def show
     end
 
-    def my_articles
-        @articles = Article.where(user_id: @current_user)
-    end
-
     def index
         if params[:state]
             @articles = Article.where(:state => params[:state])
+        elsif params[:user_id]
+            @articles = Article.where(user_id: params[:user_id])
         else
-            @articles = Article.all
+            @articles = Article.is_submitted.order(date_submitted: :desc)
         end
     end
 
@@ -55,7 +53,7 @@ class ArticlesController < ApplicationController
     private
 
     def set_article
-        @article = Article.find(params[:id])
+        @article = Article.find_by_slug(params[:id])
     end
 
     def set_tags

@@ -21,7 +21,7 @@
         <%= form.text_area :text %>
     </p>
 
-    <%= form.select("article_tags_attributes[][tag_id]", Tag.all.collect { |tag| [tag.name, tag.id] }, { prompt: "Please select"}) %>
+    <%= form.select("article_tags_attributes[][tag_id]", Tag.all.collect { |tag| [tag.name, tag.id] }, { prompt: "Please select", selected: form.object.tags.first&.id}) %>
 
     <br/>
 

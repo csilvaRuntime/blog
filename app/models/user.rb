@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
     def needs_to_update_password?(id)
       user = User.find(id)
-      user.p_updated_at + 30.days < DateTime.now
+      user.p_updated_at + 30.seconds < DateTime.now
     end
 
     private

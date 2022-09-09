@@ -3,10 +3,13 @@
         <nav>
             <ul>
             <% if @current_user %>
-                <li><%= link_to 'Artigos', articles_path %></li>
+                <li><%= link_to 'Articles', articles_path %></li>
                 <% if @current_user.admin? %>
                     <li><%= link_to 'Users', users_path %></li>
                 <% end %>
+                <%= link_to 'My Articles', articles_path(user_id: @current_user) %>
+                <%= link_to 'My Pending Articles', articles_path(state: "pending")%>
+                <%= link_to 'My Drafts', articles_path(state: "draft")%>
                 <li id="username_nav"><%= @current_user.username %> is logged in </li>
                 <li id="logout_button"><%= button_to 'Logout', sessions_path, method: :delete %></li>
                 <li id="edit_button"><%= button_to 'View Profile', user_path(@current_user.id), method: :get %></li>

@@ -17,9 +17,12 @@ class Article < ApplicationRecord
     scope :is_pending, -> { where(state: 'pending') }
     scope :is_draft, -> { where(state: 'draft') }
 
-
     def submitted?
         self.state == "submitted"
+    end
+
+    def to_param
+        slug
     end
 
     private
