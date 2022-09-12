@@ -13,8 +13,12 @@ def create
             user.update(state: "inactive")
             flash[:alert] = "For security reasons you have to change your password every 30 seconds"
         end
-    else
-        render 'new'
+    elsif user && !user.active? && user.authenticate(params[:session][:email], params[:session][:password])
+        flash[:alert] = "Your user is not active. Please change your password!"
+        redirect_to '/sessions/new'
+    elsif user && !user.authenticate(params[:session][:email], params[:session][:password])
+        flash[:notice] = "Your password is not correct"
+        redirect_to '/sessions/new'
     end
 end
 

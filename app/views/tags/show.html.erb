@@ -1,0 +1,18 @@
+<h1>Articles listing page</h1>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Author</th>
+        <th>Editions</th>
+    </tr>
+    <% @articles.each do |article| %>
+    <tr>
+            <td onclick="location.href='<%= article_path(article.slug)%>';"> <%= article.title %></td>
+            <td id="article_text" onclick="location.href='<%= article_path(article.slug)%>';"><%= article.text %></td>
+            <td><%= article.user.username %></td>
+            <td align="center"><%= article.edit_count %></td>
+    </tr>
+    <% end %>
+</table>

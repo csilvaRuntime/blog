@@ -1,5 +1,9 @@
 <h1>Articles listing page</h1>
 
+<% Tag.all.each do |tag| %>
+    <%= link_to tag.name, tag_path(tag)%>
+<% end %>
+
 <table>
     <tr>
         <th>Title</th>

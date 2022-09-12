@@ -1,5 +1,10 @@
 class TagsController < ApplicationController
 
+    def show
+      @tag = Tag.find(params[:id])
+      @articles = @tag.articles
+    end
+
     def new
       @tag = Tag.new
     end
